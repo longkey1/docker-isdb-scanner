@@ -9,7 +9,9 @@ jobs:
   build_and_publish_image:
     runs-on: ubuntu-latest
     env:
-      IMAGE_NAME: terraform
+      IMAGE_NAME: isdb-scanner
+      RECISDB_RS_VERSION: 1.2.3
+      ISDB_SCANNER_VERSION: 1.3.2
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -27,11 +29,6 @@ jobs:
           username: ${{ github.repository_owner }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Extract branch name
-        shell: bash
-        run: echo "branch=${GITHUB_REF#refs/heads/}" >> $GITHUB_OUTPUT
-        id: extract_branch
-
       - name: Build and push
         uses: docker/build-push-action@v5
         with:
@@ -39,5 +36,8 @@ jobs:
           platforms: linux/amd64,linux/arm64
           push: true
           tags: |
-            ghcr.io/${{ github.repository_owner }}/${{ env.IMAGE_NAME }}:${{ steps.extract_branch.outputs.branch }}
-        if: ${{ steps.extract_branch.outputs.branch != 'master' }}
+            ghcr.io/${{ github.repository_owner }}/${{ env.IMAGE_NAME }}:latest
+            ghcr.io/${{ github.repository_owner }}/${{ env.IMAGE_NAME }}:${{ env.ISDB_SCANNER_VERSION }}-${{ env.RECISDB_RS_VERSION }}
+         build-args: |
+           RECISDB_RS_VERSION=${{ env.RECISDB_RS_VERSION }}
+           ISDB_SCANNER_VERSION=${{ env.ISDB_SCANNER_VERSION }}

@@ -22,7 +22,7 @@ ENTRYPOINT ["/usr/local/bin/entrypoint.sh"]
 ARG TARGETPLATFORM
 
 # Install wget
-RUN apt-get update && apt-get install -y wget
+RUN apt-get install -y wget
 
 # Install recisdb
 ARG RECISDB_RS_VERSION

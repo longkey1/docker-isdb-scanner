@@ -18,11 +18,14 @@ COPY entrypoint.sh /usr/local/bin/entrypoint.sh
 RUN chmod +x /usr/local/bin/entrypoint.sh
 ENTRYPOINT ["/usr/local/bin/entrypoint.sh"]
 
-# Install packages
+# TARGETPLATFORM
 ARG TARGETPLATFORM
 
+# Install wget
+RUN apt-get update && apt-get install -y wget
+
 # Install recisdb
-ENV RECISDB_RS_VERSION=1.2.3
+ARG RECISDB_RS_VERSION
 RUN PLATFORM=$( \
       case ${TARGETPLATFORM} in \
         linux/amd64 ) echo "amd64";; \
@@ -35,7 +38,7 @@ RUN rm ./recisdb.deb
 RUN recisdb --version
 
 # Install isdb-scanner
-ENV ISDB_SCANNER_VERSION=1.3.2
+ARG ISDB_SCANNER_VERSION
 RUN PKG_FILENAME=$( \
       case ${TARGETPLATFORM} in \
         linux/amd64 ) echo "isdb-scanner";; \

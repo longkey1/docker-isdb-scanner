@@ -16,4 +16,4 @@ export HOME=/work
 
 chown worker:worker ${WORK_DIR}
 
-exec /bin/su - worker -c "$@"
+exec /usr/sbin/gosu worker "$@"

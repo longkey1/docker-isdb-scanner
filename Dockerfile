@@ -45,6 +45,6 @@ RUN PKG_FILENAME=$( \
         linux/arm64 ) echo "isdb-scanner-arm";; \
       esac \
     ) && \
-RUN wget https://github.com/tsukumijima/ISDBScanner/releases/download/v${ISDB_SCANNER_VERSION}/${PKG_FILENAME} -O /usr/local/bin/isdb-scanner
+    wget https://github.com/tsukumijima/ISDBScanner/releases/download/v${ISDB_SCANNER_VERSION}/${PKG_FILENAME} -O /usr/local/bin/isdb-scanner
 RUN chmod +x /usr/local/bin/isdb-scanner
 RUN isdb-scanner --version

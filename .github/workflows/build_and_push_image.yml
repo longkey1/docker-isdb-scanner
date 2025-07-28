@@ -8,6 +8,9 @@ on:
 jobs:
   build_and_publish_image:
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
     env:
       IMAGE_NAME: isdb-scanner
       RECISDB_RS_VERSION: 1.2.3

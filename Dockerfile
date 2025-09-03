@@ -1,4 +1,4 @@
-FROM debian:bookworm
+FROM debian:trixie
 
 # Fix frontend not set error
 ARG DEBIAN_FRONTEND=noninteractive
